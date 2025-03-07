@@ -1,8 +1,28 @@
 <script lang="ts">
-  const formSubmit = (e: SubmitEvent) => {
+  import { db, type Score } from "./lib/db";
+  async function formSubmit(e: SubmitEvent) {
     e.preventDefault();
-    console.log(new FormData(e.target));
-  };
+    try {
+      const formData = new FormData(e.target as HTMLFormElement);
+      const game = formData.get("gameName") as string;
+      const players = formData
+        .keys()
+        .filter((v) => v.includes("player"))
+        .map((v) => v.slice("player".length))
+        .toArray();
+      // TODO(reno): Actually log scores - need to process raw form data into scores format.
+      const scores: Score["scores"] = {};
+      // TODO(reno): Yelling about not specifying ID here, but it isn't needed because of
+      // auto-increment. Figure out how to fix the types in `db.ts` to make that not error.
+      const id = await db.add("scores", {
+        game,
+        players,
+        scores,
+      });
+    } catch (err) {
+      console.error("Failed to add: ", err);
+    }
+  }
   const handlePlayerChange = (e: Event, player: string) => {
     const { target } = e;
     if ((target as HTMLInputElement).checked) {
@@ -17,7 +37,7 @@
       }
     }
   };
-  // todo(reno): this needs to be grabbed from our data store
+  // TODO(reno): this needs to be grabbed from our data store
   const possiblePlayers = ["Reno", "Nikki", "Duncan", "Robert", "Kochan"];
   const selectedPlayers = $state([]);
   $inspect(selectedPlayers);
