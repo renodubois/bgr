@@ -1,9 +1,10 @@
 import { DBSchema, openDB } from "idb";
 interface Score {
-  id: number;
+  id?: number;
   game: string;
-  players: string[];
+  players: string[]; // todo(reno): metadata for players (i.e. what faction they were, if they were a traitor)
   scores: { [player: string]: number };
+  winners: string[];
 }
 
 interface MyDB extends DBSchema {
