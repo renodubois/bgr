@@ -6,12 +6,13 @@
   let onSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const players = formData
+    players = formData
       .keys()
       .filter((v) => v.includes("player"))
       .map((v) => v.slice("player".length))
       .toArray();
-    activeSection = "ScoreMetadataEntry";
+    // todo: store the players somewhere so that playerScoreEntry can use them
+    activeSection = "PlayerScoreEntry";
   };
   const possiblePlayers = ["Reno","Nikki","Duncan","Robert","Kochan"];
 </script>

@@ -14,13 +14,11 @@
       .toArray();
     activeSection = "WinnerSelect";
   };
-  const possiblePlayers = ["Reno","Nikki","Duncan","Robert","Kochan"];
 </script>
 
 <form onsubmit={onSubmit}>
-  {#each possiblePlayers as player}
+  {#each players as player}
     <input
-      type="checkbox"
       name="player{player}"
       id="player{player}"
     />

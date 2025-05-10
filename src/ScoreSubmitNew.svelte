@@ -29,6 +29,7 @@
 
   $inspect(game);
   $inspect(activeFormSection);
+  $inspect(players);
 </script>
 
 {#if activeFormSection == "GameSelect"}
